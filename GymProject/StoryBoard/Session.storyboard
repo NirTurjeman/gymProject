@@ -39,10 +39,10 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="HistoryCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EquipmentCell" textLabel="PyV-6p-jb6" detailTextLabel="URD-a4-g6V" rowHeight="69" style="IBUITableViewCellStyleSubtitle" id="Gqt-U9-s5d">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="equipmentCell" textLabel="PyV-6p-jb6" detailTextLabel="URD-a4-g6V" rowHeight="69" style="IBUITableViewCellStyleSubtitle" id="Gqt-U9-s5d">
                                                 <rect key="frame" x="0.0" y="50" width="349" height="69"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="equipmentCell" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gqt-U9-s5d" id="dXM-2v-Aj4">
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gqt-U9-s5d" id="dXM-2v-Aj4">
                                                     <rect key="frame" x="0.0" y="0.0" width="349" height="69"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
