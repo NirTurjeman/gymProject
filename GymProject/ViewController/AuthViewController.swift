@@ -1,13 +1,12 @@
 import UIKit
 class AuthViewController : UIViewController {
     @IBOutlet weak var email_Input: UITextField!
-    @IBOutlet weak var password_Input: UITextField!
+    @IBOutlet weak var sysID_Input: UITextField!
     @IBOutlet weak var login_Button: UIButton!
     private let emailAdress: String = "nir@test.com"
     private let sysID: String = "123456"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     @IBAction func loginTapped(_ sender: Any) {
 //        if validInput() {
@@ -22,7 +21,7 @@ class AuthViewController : UIViewController {
 
     }
     private func validInput() -> Bool {
-        if email_Input.text == self.emailAdress && password_Input.text == self.sysID {
+        if email_Input.text == emailAdress && sysID_Input.text == sysID {
             return true
         }
         return false

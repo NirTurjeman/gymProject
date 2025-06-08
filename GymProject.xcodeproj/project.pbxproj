@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F8004EF22DEDB2F000E9A661 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F8004EF12DEDB2F000E9A661 /* Lottie */; };
+		F8CA6E7A2DF1CDCB004ADDBC /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F8CA6E792DF1CDCB004ADDBC /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8004EF22DEDB2F000E9A661 /* Lottie in Frameworks */,
+				F8CA6E7A2DF1CDCB004ADDBC /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +133,7 @@
 			name = GymProject;
 			packageProductDependencies = (
 				F8004EF12DEDB2F000E9A661 /* Lottie */,
+				F8CA6E792DF1CDCB004ADDBC /* Alamofire */,
 			);
 			productName = GymProject;
 			productReference = F8004EAF2DED963D00E9A661 /* GymProject.app */;
@@ -216,6 +219,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F8004EF02DEDB2F000E9A661 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				F8CA6E782DF1CDCB004ADDBC /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F8004EB02DED963D00E9A661 /* Products */;
@@ -592,6 +596,14 @@
 				version = 4.5.2;
 			};
 		};
+		F8CA6E782DF1CDCB004ADDBC /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -599,6 +611,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F8004EF02DEDB2F000E9A661 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		F8CA6E792DF1CDCB004ADDBC /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F8CA6E782DF1CDCB004ADDBC /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
