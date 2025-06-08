@@ -1,6 +1,5 @@
 import UIKit
 class AuthViewController : UIViewController {
-    @IBOutlet weak var email_Input: UITextField!
     @IBOutlet weak var password_Input: UITextField!
     @IBOutlet weak var login_Button: UIButton!
     private let emailAdress: String = "nir@test.com"
