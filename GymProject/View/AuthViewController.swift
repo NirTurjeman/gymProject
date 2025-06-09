@@ -9,7 +9,6 @@ class AuthViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     @IBAction func loginTapped(_ sender: Any) {
         if let email = email_input.text, let password = password_Input.text {
@@ -25,6 +24,7 @@ class AuthViewController : UIViewController {
                     self.error.isHidden = false
                 }
             }
+            
         }
     }
 }

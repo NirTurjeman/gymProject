@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  GymProject
-//
-//  Created by NirTurjeman on 02/06/2025.
-//
-
 import UIKit
 
 @main

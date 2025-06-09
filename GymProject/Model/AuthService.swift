@@ -1,19 +1,21 @@
-import Alamofire
 import Foundation
+import Alamofire
 
 class AuthService {
     static let shared = AuthService()
-        private init() {}
-    
-    
-    func login(email: String, password: String, completion: @escaping (Result<Data?, AFError>) -> Void) {
+    let api = APIClient.shared
+    private init() {
         
-        let url = "\(AlamofireClient.shared.baseURL)/login/\(password)/\(email)"
-        
-        AlamofireClient.shared.session.request(url, method: .get, encoding: JSONEncoding.default)
-            .validate()
-            .response { response in
-                completion(response.result)
+    }
+    
+    func login(email: String, password: String, completion: @escaping (Result<Bool, AFError>) -> Void) {
+        api.request(path: "/login", method: .get) { (result: Result<Data, AFError>) in
+            switch result {
+            case .success(_):
+                completion(.success(true))
+            case .failure(let error):
+                completion(.success(false))
             }
+        }
     }
 }
