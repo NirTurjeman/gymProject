@@ -38,6 +38,11 @@ class SessionViewModel {
 
             equipments = [equipment1, equipment2]
         }
+    
+    func getEquipments() -> [Equipment] {
+        
+    }
+        
     func getFreeEquipmentsCount() -> Int {
         return equipments.filter { $0.object.status.lowercased() == "free" }.count
     }

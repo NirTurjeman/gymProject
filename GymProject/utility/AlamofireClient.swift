@@ -1,49 +1,26 @@
 import Alamofire
-import Foundation
 
-class ApiService {
-    private let baseUrl = "http://localhost:8080"
+class APIClient {
+    static let shared = APIClient()
 
-    // MARK: - GET with query parameters
-    func get(path: String, parameters: Parameters? = nil, completion: @escaping (Result<Data?, AFError>) -> Void) {
-        let url = "\(baseUrl)\(path)"
-        AF.request(url, parameters: parameters)
-            .response { response in
-                completion(response.result)
-            }
+    let baseURL = "https://api.example.com"
+    let session: Alamofire.Session
+
+    private init() {
+        session = Alamofire.Session()
     }
 
-    // MARK: - Generic request supporting both JSON body and query parameters
-    func request<T: Encodable>(
+    func request<T: Decodable>(
         path: String,
-        method: HTTPMethod,
-        query: Parameters? = nil,
-        body: T,
-        completion: @escaping (Result<Data?, AFError>) -> Void
+        method: HTTPMethod = .get,
+        parameters: Parameters? = nil,
+        headers: HTTPHeaders? = nil,
+        completion: @escaping (Result<T, AFError>) -> Void
     ) {
-        let url = "\(baseUrl)\(path)"
-        var urlRequest = try! URLRequest(url: url, method: method)
-
-        // Encode query parameters in URL
-        if let query = query {
-            urlRequest = try! URLEncoding.default.encode(urlRequest, with: query)
-        }
-
-        // Encode JSON body
-        urlRequest.httpBody = try? JSONEncoder().encode(body)
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        AF.request(urlRequest)
-            .response { response in
-                completion(response.result)
-            }
-    }
-
-    // MARK: - DELETE without body
-    func delete(path: String, parameters: Parameters? = nil, completion: @escaping (Result<Data?, AFError>) -> Void) {
-        let url = "\(baseUrl)\(path)"
-        AF.request(url, method: .delete, parameters: parameters)
-            .response { response in
+        let url = "\(baseURL)\(path)"
+        session.request(url, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+            .validate()
+            .responseDecodable(of: T.self) { response in
                 completion(response.result)
             }
     }
