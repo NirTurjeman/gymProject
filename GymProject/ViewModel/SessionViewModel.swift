@@ -45,4 +45,7 @@ class SessionViewModel {
     func getFreeEquipments(at index: Int) -> Equipment {
         return equipments[index]
     }
+    func chooseActivity(){
+        
+    }
 }

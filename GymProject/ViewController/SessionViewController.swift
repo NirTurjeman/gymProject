@@ -67,5 +67,41 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
 
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedEqipment = viewModel.getFreeEquipments(at: indexPath.row)
+           print("לחצת על: \(selectedEqipment.object.alias)")
+           showAlertForEquipment(selectedEqipment)
+       }
+
+    func showAlertForEquipment(_ equipment: Equipment) {
+        let alert = UIAlertController(title: "Connect to Equipment:",
+                                      message: "Are you sure you want to connect to \(equipment.object.alias)?",
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Connect", style: .default, handler: { _ in
+            print("Connecting to \(equipment.object.alias)")
+            //call to connect func in sessionViewModel
+            self.showExerciseSelection(for: equipment)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
+    }
+    func showExerciseSelection(for equipment: Equipment) {
+        let alert = UIAlertController(title: "Select Exercise",
+                                      message: "Choose an exercise to perform:",
+                                      preferredStyle: .alert)
+
+        for exercise in equipment.activitiesSupoorted {
+            alert.addAction(UIAlertAction(title: exercise, style: .default, handler: { _ in
+                print("Selected exercise: \(exercise)")
+                //call to viewModel to update the activity alias
+            }))
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        present(alert, animated: true)
+    }
 
     }
