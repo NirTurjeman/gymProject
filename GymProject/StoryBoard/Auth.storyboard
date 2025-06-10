@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -52,16 +52,13 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Adress" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="5Kl-c2-Nqh">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="endUser@endUser.com" borderStyle="roundedRect" placeholder="Email Adress" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="5Kl-c2-Nqh">
                                 <rect key="frame" x="88" y="261" width="289" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartInsertDeleteType="yes" textContentType="email"/>
-                                <connections>
-                                    <action selector="email:" destination="zmh-vY-PHt" eventType="editingDidEnd" id="tbz-HS-aVv"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="2025b.garzon.yuval" borderStyle="roundedRect" placeholder="SystemID" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="Y1n-Qm-pBw">
                                 <rect key="frame" x="88" y="337" width="289" height="34"/>
@@ -98,16 +95,6 @@
                                     <action selector="loginTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="NnP-9p-tbl"/>
                                 </connections>
                             </button>
-<<<<<<< HEAD
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZA-AD-gg5">
-                                <rect key="frame" x="175" y="448" width="42" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" id="ABl-Kk-MwM"/>
-                                    <constraint firstAttribute="width" id="V52-L1-gnB"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemRedColor"/>
-=======
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cgy-qU-sRo">
                                 <rect key="frame" x="16" y="261" width="64" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -133,7 +120,13 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
->>>>>>> main
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hb3-vp-DZu">
+                                <rect key="frame" x="16" y="478" width="361" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" systemColor="systemPinkColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -141,20 +134,13 @@
                         <color key="backgroundColor" systemColor="scrollViewTexturedBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="email_Input" destination="5Kl-c2-Nqh" id="e9V-wp-iIn"/>
-                        <outlet property="email_input" destination="5Kl-c2-Nqh" id="edK-aU-gKb"/>
-                        <outlet property="error" destination="gZA-AD-gg5" id="a6d-Yv-WoG"/>
+                        <outlet property="email_input" destination="5Kl-c2-Nqh" id="i3f-mE-pK5"/>
+                        <outlet property="error" destination="hb3-vp-DZu" id="7yb-O3-yGL"/>
                         <outlet property="login_Button" destination="chv-Jm-wHz" id="tt2-95-H1d"/>
-<<<<<<< HEAD
-                        <outlet property="password_Input" destination="Y1n-Qm-pBw" id="e4u-Fu-LaE"/>
-                        <outlet property="textInput" destination="5Kl-c2-Nqh" id="DOh-W2-Des"/>
-=======
-                        <outlet property="sysID_Input" destination="Y1n-Qm-pBw" id="tnW-Tm-HCs"/>
->>>>>>> main
+                        <outlet property="systemID_Input" destination="Y1n-Qm-pBw" id="cu9-0y-S7J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="zmh-vY-PHt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="130.53435114503816" y="-27.464788732394368"/>
         </scene>
@@ -168,12 +154,9 @@
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-<<<<<<< HEAD
         </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-=======
->>>>>>> main
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

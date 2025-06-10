@@ -6,10 +6,10 @@ struct Object: Codable {
     let status: String
     let active: Bool
     let creationTimestamp: Date
-    let createdBy: userId
+    let createdBy: UserId
 }
 
-struct userId: Codable {
+struct UserId: Codable {
     let email: String
-    let systemId: String
+    let systemID: String? 
 }

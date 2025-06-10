@@ -147,8 +147,8 @@
                         <color key="backgroundColor" systemColor="scrollViewTexturedBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="scanEquipment" destination="S5x-iN-jHH" id="U9I-dF-hqQ"/>
-                        <outlet property="tableView" destination="pST-Tu-cAe" id="5bu-Cv-uTf"/>
+                        <outlet property="scanEquipment" destination="S5x-iN-jHH" id="aUZ-of-dgp"/>
+                        <outlet property="tableView" destination="pST-Tu-cAe" id="8OQ-ci-YwL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

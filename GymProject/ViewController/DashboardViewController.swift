@@ -7,10 +7,20 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     @IBOutlet weak var startSessionView: UIView!
     @IBOutlet weak var startSessionLBL: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    private let systemID = UserDefaults.standard.string(forKey: "userSystemID") ?? ""
+    private let userEmail = UserDefaults.standard.string(forKey: "userEmail") ?? ""
     private var scanAnimationView: LottieAnimationView?
-    private var viewModel : DashboardViewModel!
+    private var viewModel: DashboardViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = DashboardViewModel(userSystemID: systemID, userEmail: userEmail) { [weak self] sessions in
+              DispatchQueue.main.async {
+                  self?.tableView.reloadData()
+              }
+          }
+        tableView.delegate = self
+        tableView.dataSource = self
         setupStartSession()
     }
     
@@ -99,44 +109,36 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
             }
         }
     }
-    private func setupTableView(){
-        
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getSessionHistoryCount()
+        let count = viewModel.getSessionHistoryCount()
+        print("Count: \(count)")
+        return count
         }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SessionCell", for: indexPath)
+
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "SessionCell")
+        
         let date = viewModel.getSessionHistory(at: indexPath.row).object.creationTimestamp
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: date)
+
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
         let timeString = timeFormatter.string(from: date)
 
         let title = "\(indexPath.row + 1). Date: \(dateString)"
-        let subtitle = "Time: \(timeString)"
+        let subtitle = "Start Time: \(timeString)"
 
-        let attributedTitle = NSMutableAttributedString(string: title, attributes: [
-            .font: UIFont.boldSystemFont(ofSize: 16),
-            .foregroundColor: UIColor.label
-        ])
+        cell.textLabel?.text = title
+        cell.detailTextLabel?.text = subtitle
 
-        let attributedSubtitle = NSAttributedString(string: "\n\(subtitle)", attributes: [
-            .font: UIFont.systemFont(ofSize: 14),
-            .foregroundColor: UIColor.systemGray
-        ])
-
-        attributedTitle.append(attributedSubtitle)
-
-        cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.attributedText = attributedTitle
-        cell.detailTextLabel?.text = nil
-
-        cell.imageView?.image = UIImage(systemName: "dumbbell")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
+        cell.imageView?.image = UIImage(systemName: "dumbbell.fill")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
 
         return cell
     }
+
+
 }

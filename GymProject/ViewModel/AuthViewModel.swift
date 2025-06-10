@@ -7,8 +7,8 @@ class AuthViewModel {
         self.authService = authService
     }
 
-    func checkLogIn(email: String, password: String, completion: @escaping (Bool) -> Void) {
-        authService.login(email: email, password: password) { result in
+    func checkLogIn(email: String, systemID: String, completion: @escaping (Bool) -> Void) {
+        authService.login(email: email, systemID: systemID) { result in
             switch result {
             case .success(let data):
                 completion(true)
