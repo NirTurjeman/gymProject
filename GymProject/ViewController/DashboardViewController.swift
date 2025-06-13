@@ -2,7 +2,7 @@ import UIKit
 import Lottie
 import CoreNFC
 
-class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NFCNDEFReaderSessionDelegate {
     @IBOutlet weak var titleLBL: UILabel!
     @IBOutlet weak var startSessionView: UIView!
     @IBOutlet weak var startSessionLBL: UILabel!
@@ -11,7 +11,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     private let userEmail = UserDefaults.standard.string(forKey: "userEmail") ?? ""
     private var scanAnimationView: LottieAnimationView?
     private var viewModel: DashboardViewModel!
-    
+    var nfcSession: NFCNDEFReaderSession?
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = DashboardViewModel(userSystemID: systemID, userEmail: userEmail) { [weak self] sessions in
@@ -21,10 +21,11 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
           }
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .white
         setupStartSession()
     }
     
-    private func setupStartSession() {
+    private func setupStartSession() { //צריכים לקשר בין מתאמן לבין session בשרת
         startSessionView.layer.cornerRadius = 100
         startSessionView.layer.masksToBounds = false
         startSessionView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,27 +52,11 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
             startSessionLBL.centerXAnchor.constraint(equalTo: startSessionView.centerXAnchor),
             startSessionLBL.centerYAnchor.constraint(equalTo: startSessionView.centerYAnchor),
         ])
-
-        let backgroundAnimation = LottieAnimationView(name: "dots")
-        backgroundAnimation.translatesAutoresizingMaskIntoConstraints = false
-        backgroundAnimation.contentMode = .scaleAspectFit
-        backgroundAnimation.loopMode = .loop
-        backgroundAnimation.backgroundBehavior = .pauseAndRestore
-        backgroundAnimation.alpha = 0.2
-        backgroundAnimation.play()
-        startSessionView.addSubview(backgroundAnimation)
-
-        NSLayoutConstraint.activate([
-            backgroundAnimation.centerXAnchor.constraint(equalTo: startSessionView.centerXAnchor),
-            backgroundAnimation.centerYAnchor.constraint(equalTo: startSessionView.centerYAnchor),
-            backgroundAnimation.widthAnchor.constraint(equalTo: startSessionView.widthAnchor, multiplier: 0.9),
-            backgroundAnimation.heightAnchor.constraint(equalTo: startSessionView.heightAnchor, multiplier: 0.9)
-        ])
-
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapStartSession))
         startSessionView.isUserInteractionEnabled = true
         startSessionView.addGestureRecognizer(tapGesture)
     }
+    private func connectBetweenSessionToTrenee(){}//מתי שהמשתמש סרק את ה nfc
     
     @objc private func didTapStartSession() {
         startSessionLBL.isHidden = true
@@ -101,17 +86,49 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
             startSessionLBL.centerYAnchor.constraint(equalTo: animationView.centerYAnchor, constant: 70),
             startSessionLBL.centerXAnchor.constraint(equalTo: animationView.centerXAnchor)
         ])
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let storyboard = UIStoryboard(name: "Session", bundle: nil)
-            if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
-                sessionVC.modalPresentationStyle = .fullScreen
-                self.present(sessionVC, animated: true, completion: nil)
+        startScanning()
+    }
+    @IBAction func startScanning() {
+        nfcSession = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: true)
+        nfcSession?.alertMessage = "Put your iPhone near the card to read it"
+        nfcSession?.begin()
+    }
+    
+    func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
+        print("Session invalidated: \(error.localizedDescription)")
+    }
+    
+    func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
+        for message in messages {
+            for record in message.records {
+                if let payload = String(data: record.payload, encoding: .utf8) { print("payload:\(payload), type: \(type(of: payload))")
+                    let cleanedPayload = payload.trimmingCharacters(in: .controlCharacters)
+                    print("Cleaned payload: \(cleanedPayload)")
+                    if cleanedPayload == "123" {
+                        print("success")
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                           let storyboard = UIStoryboard(name: "Session", bundle: nil)
+                           if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
+                               sessionVC.modalPresentationStyle = .fullScreen
+                               self.present(sessionVC, animated: true, completion: nil)
+                           }
+                        }
+                    } else {
+                        print("failed")
+                    }
+                }
             }
         }
     }
+        
+    private func showSuccessAlert(with message: String) {
+        let alert = UIAlertController(title: "NFC Success", message: "תוכן התג: \(message)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = viewModel.getSessionHistoryCount()
-        print("Count: \(count)")
         return count
         }
 

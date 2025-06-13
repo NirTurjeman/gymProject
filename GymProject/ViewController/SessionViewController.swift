@@ -26,7 +26,7 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
            tableView.delegate = self
            tableView.separatorStyle = .none
            tableView.rowHeight = 80
-
+           tableView.backgroundColor = .white
            view.addSubview(tableView)
 
            NSLayoutConstraint.activate([
