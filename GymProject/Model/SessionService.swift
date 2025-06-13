@@ -24,12 +24,15 @@ class SessionService {
     }
 
     func getAllSessionActivities(sessionId: String, userSystemId: String, userEmail: String, completion: @escaping (Result<[Activity], Error>) -> Void) {
-        let path = "/ambient-intelligence/objects/\(sessionId)/\(sessionId)/children"
+        let path = "ambient-intelligence/objects/\(userSystemId)/\(sessionId)/children"
+        print("path: \(path)")
         let parameters: [String: String] = [
-            "userSystemId": userSystemId,
             "userEmail": userEmail
         ]
-        api.request(path: path, method: .get, parameters: parameters) { (result: Result<Data, AFError>) in
+        print("userSystemId: \(userSystemId)")
+        print("sessionId: \(sessionId)")
+        print("userEmail: \(userEmail)")
+        api.request(path: path, method: .get, parameters: parameters, encoding: URLEncoding.default) { (result: Result<Data, AFError>) in
             switch result {
             case .success(let data):
                 do {
@@ -45,5 +48,6 @@ class SessionService {
             }
         }
     }
+
 
 }

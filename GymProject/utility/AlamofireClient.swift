@@ -4,7 +4,7 @@ import Foundation
 class APIClient {
     static let shared = APIClient()
 
-    let baseURL = "http://192.168.1.41:8081"
+    let baseURL = "http://192.168.68.104:8081"
     let session: Alamofire.Session
 
     private init() {
@@ -37,18 +37,29 @@ class APIClient {
         method: HTTPMethod = .get,
         parameters: Parameters? = nil,
         headers: HTTPHeaders? = nil,
+        encoding: ParameterEncoding? = nil, // הוספתי פרמטר encoding אופציונלי
         completion: @escaping (Result<T, AFError>) -> Void
     ) {
         let url = "\(baseURL)/\(path)"
-        session.request(url, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+
+        let chosenEncoding: ParameterEncoding = encoding ?? {
+            switch method {
+            case .get:
+                return URLEncoding.default
+            default:
+                return JSONEncoding.default
+            }
+        }()
+
+        session.request(url, method: method, parameters: parameters, encoding: chosenEncoding, headers: headers)
             .validate()
             .response { response in
-                
+
                 // 🔹 הדפסת סטטוס קוד מהשרת
                 if let statusCode = response.response?.statusCode {
                     print("🔹 Response status code: \(statusCode)")
                 }
-                
+
                 switch response.result {
                 case .success(let data):
                     // 🔹 הדפסת התגובה הגולמית לפני פענוח
@@ -74,5 +85,6 @@ class APIClient {
                 }
             }
     }
+
 
 }

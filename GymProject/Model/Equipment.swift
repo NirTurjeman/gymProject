@@ -1,16 +1,15 @@
-
 struct Equipment: Codable {
     let weightKg: Int
     let location: String
     let manufacturer: String
-    let activitiesSupoorted: [String]
+    let activitiesSupported: [String]?
     let object: Object
 
     enum CodingKeys: String, CodingKey {
         case weightKg
         case location
         case manufacturer
-        case activitiesSupoorted
+        case activitiesSupported = "activitiesSupported"
         case object
     }
 
@@ -19,7 +18,7 @@ struct Equipment: Codable {
         weightKg = try container.decode(Int.self, forKey: .weightKg)
         location = try container.decode(String.self, forKey: .location)
         manufacturer = try container.decode(String.self, forKey: .manufacturer)
-        activitiesSupoorted = try container.decode([String].self, forKey: .activitiesSupoorted)
+        activitiesSupported = try container.decodeIfPresent([String].self, forKey: .activitiesSupported)
         object = try container.decode(Object.self, forKey: .object)
     }
 }

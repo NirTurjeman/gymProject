@@ -159,9 +159,14 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             print("row selected: \(indexPath.row)")
             let session = viewModel.getSessionHistory(at: indexPath.row)
-            let storyboard = UIStoryboard(name: "SessionDetail", bundle: nil)
+            print("Session.object (Dashboard): \(session)")
+            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
             if let detailVC = storyboard.instantiateViewController(withIdentifier: "SessionDetailsViewController") as? SessionDetailViewController {
-                let detailVM = SessionDeteailsViewModel(session: session)
+                let detailVM = SessionDeteailsViewModel(session: session) { activities in
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
                 detailVC.configure(with: detailVM)
                 detailVC.modalPresentationStyle = .fullScreen
                 self.present(detailVC, animated: true, completion: nil)

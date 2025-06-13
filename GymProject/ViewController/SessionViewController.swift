@@ -92,7 +92,7 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
                                       message: "Choose an exercise to perform:",
                                       preferredStyle: .alert)
 
-        for exercise in equipment.activitiesSupoorted {
+        for exercise in equipment.activitiesSupported! {
             alert.addAction(UIAlertAction(title: exercise, style: .default, handler: { _ in
                 print("Selected exercise: \(exercise)")
                 //call to viewModel to update the activity alias

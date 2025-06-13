@@ -5,3 +5,8 @@ struct Activity: Codable {
     let equipment: Equipment
     let object: Object
 }
+//struct ActivityDetails: Codable {
+//    let finished: Date?
+//    let reps: Int
+//    let equipment: Equipment
+//}

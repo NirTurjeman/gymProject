@@ -4,27 +4,15 @@ import UIKit
 class SessionDetailViewController: UIViewController, UITableViewDataSource {
 
     private var viewModel: SessionDeteailsViewModel!
-    @IBOutlet weak var sessionTitle: UILabel!
-    @IBOutlet weak var ActivityTable: UITableView!
-    @IBOutlet weak var sessionDate: UILabel!
-
+    @IBOutlet weak var tableView: UITableView!
+    
     func configure(with viewModel: SessionDeteailsViewModel) {
         self.viewModel = viewModel
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ActivityTable.dataSource = self
-
-        // Set session title
-        sessionTitle.text = viewModel.getSession().object.alias
-
-        // Set session date
-        let creationDate = viewModel.getSession().object.creationTimestamp
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        sessionDate.text = formatter.string(from: creationDate)
+        tableView.dataSource = self
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
