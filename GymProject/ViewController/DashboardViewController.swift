@@ -156,6 +156,16 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
 
         return cell
     }
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            print("row selected: \(indexPath.row)")
+            let session = viewModel.getSessionHistory(at: indexPath.row)
+            let storyboard = UIStoryboard(name: "SessionDetail", bundle: nil)
+            if let detailVC = storyboard.instantiateViewController(withIdentifier: "SessionDetailsViewController") as? SessionDetailViewController {
+                let detailVM = SessionDeteailsViewModel(session: session)
+                detailVC.configure(with: detailVM)
+                detailVC.modalPresentationStyle = .fullScreen
+                self.present(detailVC, animated: true, completion: nil)
+            }
+        }
 
 }
