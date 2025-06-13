@@ -6,12 +6,13 @@ class SessionDeteailsViewModel {
     private let sessionService = SessionService.shared
     init(session: Session, completion: @escaping ([Activity]) -> Void) {
         self.session = session
-        print("Session.object (SessionDetailsViewModel): \(String(describing: session.object.id.first?.value))")
+ 
         getSessionActivities { activities in
-            completion(activities)
+            completion(self.activities)
         }
     }
     func getSessionActivities(completion: @escaping ([Activity]) -> Void) {
+        
         guard let sessionId = session.object.id["objectId"] else {
             print("Invalid session ID")
             completion([])
@@ -23,6 +24,8 @@ class SessionDeteailsViewModel {
             return
         }
         let userEmail = UserDefaults.standard.string(forKey: "userEmail") ?? ""
+        
+        
 
         sessionService.getAllSessionActivities(sessionId: sessionId, userSystemId: userSystemId, userEmail: userEmail) { result in
             switch result {

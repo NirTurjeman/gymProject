@@ -44,7 +44,8 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "equipmentCell", for: indexPath)
         let eqipment = viewModel.getFreeEquipments(at: indexPath.row)
-        let title = "\(indexPath.row + 1). \(eqipment.object.alias)"
+        let alias = eqipment.object.alias ?? "Unknown"
+        let title = "\(indexPath.row + 1). \(alias)"
         let subtitle = "Loction: \(eqipment.location)"
 
         let attributedTitle = NSMutableAttributedString(string: title, attributes: [
@@ -67,20 +68,22 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
 
         return cell
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedEqipment = viewModel.getFreeEquipments(at: indexPath.row)
-           print("לחצת על: \(selectedEqipment.object.alias)")
-           showAlertForEquipment(selectedEqipment)
-       }
+        let alias = selectedEqipment.object.alias ?? "Unknown"
+        print("לחצת על: \(alias)")
+        showAlertForEquipment(selectedEqipment)
+    }
 
     func showAlertForEquipment(_ equipment: Equipment) {
+        let alias = equipment.object.alias ?? "Unknown"
         let alert = UIAlertController(title: "Connect to Equipment:",
-                                      message: "Are you sure you want to connect to \(equipment.object.alias)?",
+                                      message: "Are you sure you want to connect to \(alias)?",
                                       preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Connect", style: .default, handler: { _ in
-            print("Connecting to \(equipment.object.alias)")
-            //call to connect func in sessionViewModel
+            print("Connecting to \(alias)")
             self.showExerciseSelection(for: equipment)
         }))
 
@@ -92,7 +95,7 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
                                       message: "Choose an exercise to perform:",
                                       preferredStyle: .alert)
 
-        for exercise in equipment.activitiesSupported! {
+        for exercise in equipment.activitiesSupported {
             alert.addAction(UIAlertAction(title: exercise, style: .default, handler: { _ in
                 print("Selected exercise: \(exercise)")
                 //call to viewModel to update the activity alias
