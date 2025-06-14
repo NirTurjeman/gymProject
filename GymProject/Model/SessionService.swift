@@ -7,8 +7,16 @@ class SessionService {
     let api = APIClient.shared
     init(){}
 
-    func getAllFreeEquipments(completion: @escaping (Result<[Equipment], Error>) -> Void) {
-        api.request(path: "/freeEquesment", method: .get) { result in
+    func getAllFreeEquipments(userSystemId: String, userEmail: String,completion: @escaping (Result<[Equipment], Error>) -> Void) {
+        let parameters: [String: String] = [
+            "userEmail": userEmail,
+            "userSystemID": userSystemId
+        ]
+        let path = "ambient-intelligence/objects/search/byTypeAndStatus/equipment/FREE"
+        print("Fetching free equipments with parameters: \(parameters)")
+        
+
+        api.request(path: path, method: .get,parameters: parameters) { result in
             switch result {
             case .success(let json):
                 let equipments = json.arrayValue.map { Equipment(json: $0) }

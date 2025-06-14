@@ -59,6 +59,11 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     private func connectBetweenSessionToTrenee(){}//מתי שהמשתמש סרק את ה nfc
     
     @objc private func didTapStartSession() {
+        let storyboard = UIStoryboard(name: "Session", bundle: nil)
+        if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
+            sessionVC.modalPresentationStyle = .fullScreen
+            self.present(sessionVC, animated: true, completion: nil)
+        }
         startSessionLBL.isHidden = true
 
         scanAnimationView = LottieAnimationView(name: "scanNFC")

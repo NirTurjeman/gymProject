@@ -3,7 +3,9 @@ class SessionViewModel {
     private var equipments: [Equipment] = []
     private var sessionService = SessionService()
     init() {
-        sessionService.getAllFreeEquipments { result in
+        let systemID = UserDefaults.standard.string(forKey: "userSystemID") ?? ""
+        let userEmail = UserDefaults.standard.string(forKey: "userEmail") ?? ""
+        sessionService.getAllFreeEquipments(userSystemId: systemID,userEmail: userEmail) { result in
             switch result {
             case .success(let equipments):
                 print("Received \(equipments.count) equipments")

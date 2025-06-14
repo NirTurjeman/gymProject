@@ -5,7 +5,7 @@ import Foundation
 class APIClient {
     static let shared = APIClient()
 
-    let baseURL = "http://192.168.10.151:8081"
+    let baseURL = "http://192.168.1.126:8081"
     let session: Alamofire.Session
 
     private init() {
@@ -34,6 +34,9 @@ class APIClient {
         session.request(url, method: method, parameters: parameters, encoding: chosenEncoding, headers: headers)
             .validate()
             .response { response in
+                if let request = response.request {
+                        print("🌐 Full URL: \(request.url?.absoluteString ?? "N/A")")
+                    }
                 if let statusCode = response.response?.statusCode {
                     print("🔹 Response status code: \(statusCode)")
                 }
