@@ -93,4 +93,27 @@ class SessionService {
             }
         }
     }
+    func finishActivity(email: String, systemID: String, sessionID: String, activityID: String) {
+        let params: [String: Any] = [
+            "command": "finish-activity",
+            "invokedBy": [
+                    "email": email,
+                    "systemID": systemID
+            ],
+            "targetObject": [
+                "objectId": activityID,
+                "systemID": systemID
+            ],
+            "commandAttributes": [
+            ]
+        ]
+        api.request(
+            path: "ambient-intelligence/commands",
+            method: .post,
+            parameters: params,
+            encoding: JSONEncoding.default
+        ) { (result: Result<JSON, AFError>) in
+            
+        }
+    }
 }

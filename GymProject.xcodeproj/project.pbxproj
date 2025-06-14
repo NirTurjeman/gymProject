@@ -307,7 +307,7 @@
 				CODE_SIGN_ENTITLEMENTS = GymProject/GymProject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9P39LAGWTP;
+				DEVELOPMENT_TEAM = WCN89CC238;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GymProject/Info.plist;
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Testing Only";
@@ -321,7 +321,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = NirTurjeman.GymProject;
+				PRODUCT_BUNDLE_IDENTIFIER = AriGuterman.GymProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -337,7 +337,7 @@
 				CODE_SIGN_ENTITLEMENTS = GymProject/GymProject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9P39LAGWTP;
+				DEVELOPMENT_TEAM = WCN89CC238;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GymProject/Info.plist;
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Testing Only";
@@ -351,7 +351,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = NirTurjeman.GymProject;
+				PRODUCT_BUNDLE_IDENTIFIER = AriGuterman.GymProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
