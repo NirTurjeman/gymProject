@@ -45,4 +45,52 @@ class SessionService {
             }
         }
     }
+    func startActivity(
+        email: String,
+        systemID: String,
+        sessionID: String,
+        equipmentID: String,
+        equipmentName: String,
+        completion: @escaping (Result<Activity, AFError>) -> Void
+    ) {
+        let params: [String: Any] = [
+            "command": "start-activity",
+            "invokedBy": [
+                    "email": email,
+                    "systemID": systemID
+            ],
+            "targetObject": [
+                "objectId": sessionID,
+                "systemID": systemID
+            ],
+            "commandAttributes": [
+                "equipmentId": equipmentID,
+                "activityName": equipmentName 
+            ]
+        ]
+
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+
+        api.request(
+            path: "ambient-intelligence/commands",
+            method: .post,
+            parameters: params,
+            headers: headers,
+            encoding: JSONEncoding.default
+        ) { (result: Result<JSON, AFError>) in
+            switch result {
+            case .success(let json):
+                if let activityJson = json.array?.first {
+                    let activity = Activity(json: activityJson)
+                    completion(.success(activity))
+                } else {
+                    completion(.failure(AFError.responseValidationFailed(reason: .dataFileNil)))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

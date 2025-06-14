@@ -5,7 +5,7 @@ import Foundation
 class APIClient {
     static let shared = APIClient()
 
-    let baseURL = "http://192.168.1.126:8081"
+    let baseURL = "http://192.168.68.104:8081"
     let session: Alamofire.Session
 
     private init() {

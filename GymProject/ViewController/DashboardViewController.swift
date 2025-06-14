@@ -59,11 +59,6 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     private func connectBetweenSessionToTrenee(){}//מתי שהמשתמש סרק את ה nfc
     
     @objc private func didTapStartSession() {
-        let storyboard = UIStoryboard(name: "Session", bundle: nil)
-        if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
-            sessionVC.modalPresentationStyle = .fullScreen
-            self.present(sessionVC, animated: true, completion: nil)
-        }
         startSessionLBL.isHidden = true
 
         scanAnimationView = LottieAnimationView(name: "scanNFC")
@@ -94,6 +89,11 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
         startScanning()
     }
     @IBAction func startScanning() {
+        let storyboard = UIStoryboard(name: "Session", bundle: nil)
+        if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
+            sessionVC.modalPresentationStyle = .fullScreen
+            self.present(sessionVC, animated: true, completion: nil)
+        }
         nfcSession = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: true)
         nfcSession?.alertMessage = "Put your iPhone near the card to read it"
         nfcSession?.begin()
@@ -173,7 +173,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
                     }
                 }
                 detailVC.configure(with: detailVM)
-                detailVC.modalPresentationStyle = .fullScreen
+                detailVC.modalPresentationStyle = .popover
                 self.present(detailVC, animated: true, completion: nil)
             }
         }

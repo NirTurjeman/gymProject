@@ -52,7 +52,7 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="endUser@endUser.com" borderStyle="roundedRect" placeholder="Email Adress" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="5Kl-c2-Nqh">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="admin@admin.com" borderStyle="roundedRect" placeholder="Email Adress" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="5Kl-c2-Nqh">
                                 <rect key="frame" x="88" y="261" width="289" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

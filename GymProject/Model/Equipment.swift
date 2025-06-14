@@ -11,7 +11,7 @@ struct Equipment {
         object = Object(json: json)
         let details = json["details"]
         weightKg = details["WeightKg"].intValue
-        location = details["location"].stringValue
+        location = details["Location"].stringValue
         manufacturer = details["manufacturer"].stringValue
         activitiesSupported = details["activitiesSupported"].arrayValue.map { $0.stringValue }
     }

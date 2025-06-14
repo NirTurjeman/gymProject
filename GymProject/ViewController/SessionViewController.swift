@@ -2,12 +2,18 @@ import UIKit
 class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var scanEquipment: UIView!
     @IBOutlet weak var tableView: UITableView!
-    private var viewModel = SessionViewModel()
+    private var viewModel: SessionViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScanEquipment()
         tableView.dataSource = self
         tableView.delegate = self
+        self.viewModel = SessionViewModel(){
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
     }
     private func setupScanEquipment() {
         scanEquipment.layer.cornerRadius = 20
@@ -38,13 +44,15 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
        }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getFreeEquipmentsCount()
+        let count = viewModel.getEquipments().count
+        print("count: \(count)")
+        return count
         }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "equipmentCell", for: indexPath)
         let eqipment = viewModel.getFreeEquipments(at: indexPath.row)
-        let alias = eqipment.object.alias ?? "Unknown"
+        let alias = eqipment.object.alias
         let title = "\(indexPath.row + 1). \(alias)"
         let subtitle = "Loction: \(eqipment.location)"
 
@@ -71,8 +79,7 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedEqipment = viewModel.getFreeEquipments(at: indexPath.row)
-        let alias = selectedEqipment.object.alias ?? "Unknown"
-        print("לחצת על: \(alias)")
+        let alias = selectedEqipment.object.alias
         showAlertForEquipment(selectedEqipment)
     }
 
@@ -98,7 +105,7 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
         for exercise in equipment.activitiesSupported {
             alert.addAction(UIAlertAction(title: exercise, style: .default, handler: { _ in
                 print("Selected exercise: \(exercise)")
-                //call to viewModel to update the activity alias
+                self.startActivity(exercise: exercise,equipment: equipment)
             }))
         }
 
@@ -106,5 +113,13 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
 
         present(alert, animated: true)
     }
-
+    func startActivity(exercise: String,equipment: Equipment) {
+        print("Starting activity: \(exercise)")
+        print("equipment: \(equipment)")
+        let storyboard = UIStoryboard(name: "Session", bundle: nil)
+        if let sessionVC = storyboard.instantiateViewController(withIdentifier: "ActivityViewController") as? ActivityViewController {
+            sessionVC.modalPresentationStyle = .popover
+            self.present(sessionVC, animated: true, completion: nil)
+        }
+    }
     }
