@@ -34,6 +34,6 @@ class ActivityViewModel {
         return currentActivity
     }
     func finishActivity() {
-        service.finishActivity(email: self.email, systemID: self.systemID, sessionID: "", activityID: self.currentActivity?.object.id.values.first ?? "")
+        service.finishActivity(email: self.email, systemID: self.systemID, sessionID: "", activityID: self.currentActivity?.object.id["objectId"] ?? "")
     }
 }

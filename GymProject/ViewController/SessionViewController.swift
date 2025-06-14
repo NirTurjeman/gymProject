@@ -1,5 +1,6 @@
 import UIKit
 class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+    @IBOutlet weak var finishSessionButton: UIButton!
     @IBOutlet weak var scanEquipment: UIView!
     @IBOutlet weak var tableView: UITableView!
     private var viewModel: SessionViewModel!
@@ -113,13 +114,26 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
 
         present(alert, animated: true)
     }
-    func startActivity(exercise: String,equipment: Equipment) {
+    func startActivity(exercise: String, equipment: Equipment) {
         print("Starting activity: \(exercise)")
         print("equipment: \(equipment)")
+
         let storyboard = UIStoryboard(name: "Session", bundle: nil)
         if let sessionVC = storyboard.instantiateViewController(withIdentifier: "ActivityViewController") as? ActivityViewController {
+            sessionVC.activityName = exercise
+            sessionVC.sessionID = viewModel.getSession()?.object.id["objectId"] ?? ""
+            sessionVC.equipmentID = equipment.object.id["objectId"]
+            sessionVC.equipmentName = equipment.object.alias
             sessionVC.modalPresentationStyle = .popover
             self.present(sessionVC, animated: true, completion: nil)
         }
     }
+    @IBAction func finishButtonTap(_ sender: Any) {
+        if presentingViewController != nil {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
     }

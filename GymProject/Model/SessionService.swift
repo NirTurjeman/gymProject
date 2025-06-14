@@ -104,16 +104,66 @@ class SessionService {
                 "objectId": activityID,
                 "systemID": systemID
             ],
-            "commandAttributes": [
-            ]
+            "commandAttributes": [:]
         ]
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+        print("parameters: \(params)")
         api.request(
             path: "ambient-intelligence/commands",
             method: .post,
             parameters: params,
+            headers: headers,
             encoding: JSONEncoding.default
         ) { (result: Result<JSON, AFError>) in
             
         }
     }
+    func startSession(
+        email: String,
+        systemID: String,
+        traineeID: String,
+        completion: @escaping (Result<Session, AFError>) -> Void
+    ) {
+        let params: [String: Any] = [
+            "command": "start-session",
+            "invokedBy": [
+                "email": email,
+                "systemID": systemID
+            ],
+            "targetObject": [
+                "objectId": traineeID,
+                "systemID": systemID
+            ],
+            "commandAttributes": [:]
+        ]
+        print("parms: \(params)")
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+        api.request(
+            path: "ambient-intelligence/commands",
+            method: .post,
+            parameters: params,
+            headers: headers,
+            encoding: JSONEncoding.default
+        ) { (result: Result<JSON, AFError>) in
+            switch result {
+            case .success(let json):
+                if let first = json.array?.first {
+                    let session = Session(json: first)
+                    completion(.success(session))
+                } else {
+                    print("❌ No session returned")
+                    completion(.failure(AFError.responseValidationFailed(reason: .dataFileNil)))
+                }
+            case .failure(let error):
+                print("Request failed with error: \(error)")
+                completion(.failure(error))
+            }
+        }
+    }
+
 }

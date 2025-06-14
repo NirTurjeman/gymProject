@@ -1,4 +1,5 @@
 import UIKit
+import SwiftyJSON
 import Lottie
 import CoreNFC
 
@@ -15,17 +16,30 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = DashboardViewModel(userSystemID: systemID, userEmail: userEmail) { [weak self] sessions in
-              DispatchQueue.main.async {
-                  self?.tableView.reloadData()
-              }
-          }
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
         setupStartSession()
     }
-    
-    private func setupStartSession() { //צריכים לקשר בין מתאמן לבין session בשרת
+    override func viewDidAppear(_ animated: Bool){
+        startSessionLBL.isHidden = false
+        scanAnimationView?.isHidden = true
+        viewModel = DashboardViewModel(userSystemID: systemID, userEmail: userEmail) { [weak self] sessions in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .white
+        setupStartSession()
+    }
+
+    private func setupStartSession() {
         startSessionView.layer.cornerRadius = 100
         startSessionView.layer.masksToBounds = false
         startSessionView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +59,7 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
         startSessionLBL.numberOfLines = 2
         startSessionLBL.textAlignment = .center
         startSessionLBL.textColor = .white
-        startSessionLBL.font = UIFont.boldSystemFont(ofSize: 30)
+        startSessionLBL.font = UIFont.boldSystemFont(ofSize: 25)
         startSessionLBL.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -56,8 +70,6 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
         startSessionView.isUserInteractionEnabled = true
         startSessionView.addGestureRecognizer(tapGesture)
     }
-    private func connectBetweenSessionToTrenee(){}//מתי שהמשתמש סרק את ה nfc
-    
     @objc private func didTapStartSession() {
         startSessionLBL.isHidden = true
 
@@ -111,13 +123,14 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
                     print("Cleaned payload: \(cleanedPayload)")
                     if cleanedPayload == "123" {
                         print("success")
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                           let storyboard = UIStoryboard(name: "Session", bundle: nil)
-                           if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
-                               sessionVC.modalPresentationStyle = .fullScreen
-                               self.present(sessionVC, animated: true, completion: nil)
-                           }
-                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+//                           let storyboard = UIStoryboard(name: "Session", bundle: nil)
+//                           if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
+//                               sessionVC.session = self.startSession()
+//                               sessionVC.modalPresentationStyle = .fullScreen
+//                               self.present(sessionVC, animated: true, completion: nil)
+//                           }
+//                        }
                     } else {
                         print("failed")
                     }
@@ -125,7 +138,6 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
             }
         }
     }
-        
     private func showSuccessAlert(with message: String) {
         let alert = UIAlertController(title: "NFC Success", message: "תוכן התג: \(message)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))

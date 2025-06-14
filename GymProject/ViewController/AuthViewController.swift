@@ -18,8 +18,7 @@ class AuthViewController : UIViewController {
                 if trainee {
                     UserDefaults.standard.set(self.systemID_Input.text, forKey: "userSystemID")
                     UserDefaults.standard.set(self.email_input.text, forKey: "userEmail")
-                    UserDefaults.standard.set(trainee,forKey: "trainee")
-                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                     if let dashboardVC = storyboard.instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController {
                         dashboardVC.modalPresentationStyle = .fullScreen
                         self.present(dashboardVC, animated: true, completion: nil)

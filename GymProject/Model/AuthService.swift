@@ -28,6 +28,8 @@ class AuthService {
                       // אם זה מערך, קח את הראשון
                       if let traineeJson = json.array?.first {
                           let trainee = Trainee(json: traineeJson)
+                          let traineeJsonString = trainee.toJSON.rawString()
+                          UserDefaults.standard.set(traineeJsonString, forKey: "userTrainee")
                           completion(.success(trainee))
                       } else {
                           completion(.failure(AFError.responseValidationFailed(reason: .dataFileNil)))

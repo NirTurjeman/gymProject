@@ -7,7 +7,7 @@ struct Session {
 
     init(json: JSON) {
         object = Object(json: json) // Pass the whole JSON for common fields
-        let details = json["details"]
+        let details = json["objectDetails"]
         if let finishedString = details["Finished"].string, !finishedString.isEmpty {
             finishedTime = ISO8601DateFormatter().date(from: finishedString)
         } else {

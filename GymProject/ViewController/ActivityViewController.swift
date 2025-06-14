@@ -25,6 +25,7 @@ class ActivityViewController: UIViewController {
             equipmentID: equipmentID,
             equipmentName: equipmentName
         )
+        setupView()
         startOrResumeStopwatch()
     }
 
