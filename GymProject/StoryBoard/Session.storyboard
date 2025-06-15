@@ -38,6 +38,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="349" height="386"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="equipmentCell" textLabel="PyV-6p-jb6" detailTextLabel="URD-a4-g6V" rowHeight="69" style="IBUITableViewCellStyleSubtitle" id="Gqt-U9-s5d">
                                                 <rect key="frame" x="0.0" y="50" width="349" height="69"/>
@@ -141,6 +142,9 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="connectEquipButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="FEa-al-53u"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qfq-Tg-KAk">
                                 <rect key="frame" x="35" y="741" width="325" height="56"/>

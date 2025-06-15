@@ -34,7 +34,6 @@ class ActivityViewController: UIViewController {
     }
 
     func startOrResumeStopwatch() {
-        // Prevent multiple timers from being scheduled
         guard timer == nil else { return }
 
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
@@ -42,7 +41,7 @@ class ActivityViewController: UIViewController {
             self.secondsElapsed += 1
             let minutes = self.secondsElapsed / 60
             let seconds = self.secondsElapsed % 60
-            self.timeLBL.text = String(format: "%02d:%02d", minutes, seconds)
+            self.timeLBL.text = "Time: "+String(format: "%02d:%02d", minutes, seconds)
         }
     }
 
@@ -51,12 +50,20 @@ class ActivityViewController: UIViewController {
     }
     
     @IBAction func onRefreshTap(_ sender: Any) {
-        if let reps = viewModel.getCurrentActivity()?.reps {
-            repsLBL.text = String(reps)
-        } else {
-            repsLBL.text = "0"
+        viewModel.refreshActivity { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let activity):
+                    let reps = activity.reps ?? 0
+                    self.repsLBL.text = "Reps: \(reps)"
+                case .failure(let error):
+                    print("Failed to refresh activity: \(error.localizedDescription)")
+                    self.repsLBL.text = "Reps: 0"
+                }
+            }
         }
     }
+
     @IBAction func onFinishActivityTap(_ sender: Any) {
         viewModel.finishActivity()
         if presentingViewController != nil {

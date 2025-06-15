@@ -93,6 +93,34 @@ class SessionService {
             }
         }
     }
+    func refreshActivity(email: String, systemID: String, activityID: String, completion: @escaping (Result<Activity, Error>) -> Void) {
+        let params: [String: Any] = [
+            "userSystemID": systemID,
+            "userEmail": email
+        ]
+        let path = "ambient-intelligence/objects/\(systemID)/\(activityID)"
+        
+        print("path: \(path)")
+        print("params: \(params)")
+        
+        api.request(
+            path: path,
+            method: .get,
+            parameters: params,
+            encoding: URLEncoding.default
+        ) { result in
+            switch result {
+            case .success(let json):
+                let activity = Activity(json: json)
+                completion(.success(activity))
+            case .failure(let error):
+                print("Request failed with error: \(error)")
+                completion(.failure(error))
+            }
+        }
+    }
+
+
     func finishActivity(email: String, systemID: String, sessionID: String, activityID: String) {
         let params: [String: Any] = [
             "command": "finish-activity",

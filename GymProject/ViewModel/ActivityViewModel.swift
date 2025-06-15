@@ -27,9 +27,25 @@ class ActivityViewModel {
         ) { [weak self] result in
             if case .success(let activity) = result {
                 self?.currentActivity = activity
+                print("currentActivity: \(String(describing: self?.currentActivity))")
             }
         }
     }
+    func refreshActivity(completion: @escaping (Result<Activity, Error>) -> Void) {
+        let activityID = currentActivity?.object.id["objectId"] ?? ""
+        print("currentActivity(refresh): \(String(describing: currentActivity))")
+        print("activityID: \(activityID)")
+        service.refreshActivity(email: email, systemID: systemID,activityID: currentActivity?.object.id["objectId"] ?? "") { [weak self] result in
+            switch result {
+            case .success(let activity):
+                self?.currentActivity = activity
+                completion(.success(activity))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
     func getCurrentActivity() -> Activity? {
         return currentActivity
     }

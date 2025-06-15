@@ -10,9 +10,9 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     @IBOutlet weak var tableView: UITableView!
     private let systemID = UserDefaults.standard.string(forKey: "userSystemID") ?? ""
     private let userEmail = UserDefaults.standard.string(forKey: "userEmail") ?? ""
-    private var scanAnimationView: LottieAnimationView?
     private var viewModel: DashboardViewModel!
     var nfcSession: NFCNDEFReaderSession?
+    private var startSessionLabelDefaultConstraints: [NSLayoutConstraint] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = DashboardViewModel(userSystemID: systemID, userEmail: userEmail) { [weak self] sessions in
@@ -27,7 +27,6 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     override func viewDidAppear(_ animated: Bool){
         startSessionLBL.isHidden = false
-        scanAnimationView?.isHidden = true
         viewModel = DashboardViewModel(userSystemID: systemID, userEmail: userEmail) { [weak self] sessions in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
@@ -61,51 +60,37 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
         startSessionLBL.textColor = .white
         startSessionLBL.font = UIFont.boldSystemFont(ofSize: 25)
         startSessionLBL.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
+        NSLayoutConstraint.deactivate(startSessionLabelDefaultConstraints)
+        startSessionLabelDefaultConstraints = [
             startSessionLBL.centerXAnchor.constraint(equalTo: startSessionView.centerXAnchor),
-            startSessionLBL.centerYAnchor.constraint(equalTo: startSessionView.centerYAnchor),
-        ])
+            startSessionLBL.centerYAnchor.constraint(equalTo: startSessionView.centerYAnchor)
+        ]
+        NSLayoutConstraint.activate(startSessionLabelDefaultConstraints)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapStartSession))
         startSessionView.isUserInteractionEnabled = true
         startSessionView.addGestureRecognizer(tapGesture)
     }
     @objc private func didTapStartSession() {
         startSessionLBL.isHidden = true
+        NSLayoutConstraint.deactivate(startSessionLabelDefaultConstraints)
 
-        scanAnimationView = LottieAnimationView(name: "scanNFC")
-        guard let animationView = scanAnimationView else { return }
-
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        animationView.contentMode = .scaleAspectFit
-        animationView.loopMode = .loop
-        animationView.backgroundBehavior = .pauseAndRestore
-        animationView.play()
-        view.addSubview(animationView)
-
+        startSessionLBL.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            animationView.centerXAnchor.constraint(equalTo: startSessionView.centerXAnchor),
-            animationView.centerYAnchor.constraint(equalTo: startSessionView.centerYAnchor),
-            animationView.widthAnchor.constraint(equalTo: startSessionView.widthAnchor, multiplier: 0.9),
-            animationView.heightAnchor.constraint(equalTo: startSessionView.heightAnchor, multiplier: 0.9)
+            startSessionLBL.centerYAnchor.constraint(equalTo: startSessionView.centerYAnchor, constant: 70),
+            startSessionLBL.centerXAnchor.constraint(equalTo: startSessionView.centerXAnchor)
         ])
 
         startSessionLBL.text = "Scan NFC to Start"
         startSessionLBL.font = .systemFont(ofSize: 15, weight: .medium)
         startSessionLBL.isHidden = false
-
+        startSessionLBL.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            startSessionLBL.centerYAnchor.constraint(equalTo: animationView.centerYAnchor, constant: 70),
-            startSessionLBL.centerXAnchor.constraint(equalTo: animationView.centerXAnchor)
+            startSessionLBL.centerYAnchor.constraint(equalTo: startSessionView.centerYAnchor, constant: 70),
+            startSessionLBL.centerXAnchor.constraint(equalTo: startSessionView.centerXAnchor)
         ])
         startScanning()
     }
     @IBAction func startScanning() {
-        let storyboard = UIStoryboard(name: "Session", bundle: nil)
-        if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
-            sessionVC.modalPresentationStyle = .fullScreen
-            self.present(sessionVC, animated: true, completion: nil)
-        }
         nfcSession = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: true)
         nfcSession?.alertMessage = "Put your iPhone near the card to read it"
         nfcSession?.begin()
@@ -123,14 +108,13 @@ class DashboardViewController: UIViewController,UITableViewDelegate,UITableViewD
                     print("Cleaned payload: \(cleanedPayload)")
                     if cleanedPayload == "123" {
                         print("success")
-//                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-//                           let storyboard = UIStoryboard(name: "Session", bundle: nil)
-//                           if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
-//                               sessionVC.session = self.startSession()
-//                               sessionVC.modalPresentationStyle = .fullScreen
-//                               self.present(sessionVC, animated: true, completion: nil)
-//                           }
-//                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                           let storyboard = UIStoryboard(name: "Session", bundle: nil)
+                           if let sessionVC = storyboard.instantiateViewController(withIdentifier: "SessionViewController") as? SessionViewController {
+                               sessionVC.modalPresentationStyle = .fullScreen
+                               self.present(sessionVC, animated: true, completion: nil)
+                           }
+                        }
                     } else {
                         print("failed")
                     }

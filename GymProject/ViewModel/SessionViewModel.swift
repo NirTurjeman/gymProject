@@ -40,6 +40,9 @@ class SessionViewModel {
     func getEquipments() -> [Equipment] {
         return equipments
     }
+    func getEquipmentByID(_ id: String) -> Equipment? {
+        return equipments.first { $0.object.id["objectId"] == id }
+    }
     func getFreeEquipments(at index: Int) -> Equipment {
         return equipments[index]
     }

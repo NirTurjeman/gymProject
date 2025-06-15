@@ -1,9 +1,11 @@
 import UIKit
-class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+import CoreNFC
+class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,NFCNDEFReaderSessionDelegate {
     @IBOutlet weak var finishSessionButton: UIButton!
     @IBOutlet weak var scanEquipment: UIView!
     @IBOutlet weak var tableView: UITableView!
     private var viewModel: SessionViewModel!
+    var nfcSession: NFCNDEFReaderSession?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScanEquipment()
@@ -80,12 +82,11 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedEqipment = viewModel.getFreeEquipments(at: indexPath.row)
-        let alias = selectedEqipment.object.alias
         showAlertForEquipment(selectedEqipment)
     }
 
     func showAlertForEquipment(_ equipment: Equipment) {
-        let alias = equipment.object.alias ?? "Unknown"
+        let alias = equipment.object.alias
         let alert = UIAlertController(title: "Connect to Equipment:",
                                       message: "Are you sure you want to connect to \(alias)?",
                                       preferredStyle: .alert)
@@ -136,4 +137,32 @@ class SessionViewController: UIViewController, UITableViewDelegate,UITableViewDa
         }
     }
     
+    @IBAction func connectEquipButton(_ sender: Any) {
+        startScanning()
     }
+    @IBAction func startScanning() {
+        nfcSession = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: true)
+        nfcSession?.alertMessage = "Put your iPhone near the equipment to read it"
+        nfcSession?.begin()
+    }
+    func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
+        print("Equipment connection invalidated: \(error.localizedDescription)")
+    }
+    
+    func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
+        for message in messages {
+            for record in message.records {
+                if let equipID = String(data: record.payload, encoding: .utf8) {
+                    let cleanedEquipID = equipID.trimmingCharacters(in: .controlCharacters)
+                    print("equipID: \(cleanedEquipID)")
+                    if let equipment = viewModel.getEquipmentByID(cleanedEquipID) {
+                        print("equipment: \(String(describing: equipment))")
+                        DispatchQueue.main.async {
+                            self.showAlertForEquipment(equipment)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

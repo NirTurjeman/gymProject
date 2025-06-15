@@ -4,8 +4,7 @@ import Foundation
 
 class APIClient {
     static let shared = APIClient()
-
-    let baseURL = "http://192.168.68.104:8081"
+    let baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://default.url"
     let session: Alamofire.Session
 
     private init() {
@@ -18,6 +17,7 @@ class APIClient {
         parameters: Parameters? = nil,
         headers: HTTPHeaders? = nil,
         encoding: ParameterEncoding? = nil,
+
         completion: @escaping (Result<JSON, AFError>) -> Void
     ) {
         let url = "\(baseURL)/\(path)"

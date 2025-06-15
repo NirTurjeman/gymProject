@@ -23,5 +23,7 @@
 	</dict>
 	<key>UILaunchScreen</key>
 	<false/>
+	<key>NFCReaderUsageDescription</key>
+	<string>This app uses NFC to scan gym equipment</string>
 </dict>
 </plist>
