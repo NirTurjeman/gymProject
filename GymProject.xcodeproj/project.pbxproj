@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D730F1A32DFC70C500FC1038 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = D730F1A22DFC70C500FC1038 /* SwiftyJSON */; };
 		F8004EF22DEDB2F000E9A661 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F8004EF12DEDB2F000E9A661 /* Lottie */; };
+		F8061A0F2DFED83D00F75ECF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8061A0E2DFED83D00F75ECF /* README.md */; };
 		F8CA6E7A2DF1CDCB004ADDBC /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F8CA6E792DF1CDCB004ADDBC /* Alamofire */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		F8004EAF2DED963D00E9A661 /* GymProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8004EC52DED963E00E9A661 /* GymProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GymProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8004ECF2DED963E00E9A661 /* GymProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GymProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8061A0E2DFED83D00F75ECF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -101,6 +103,7 @@
 				F8004EC82DED963E00E9A661 /* GymProjectTests */,
 				F8004ED22DED963E00E9A661 /* GymProjectUITests */,
 				F8004EB02DED963D00E9A661 /* Products */,
+				F8061A0E2DFED83D00F75ECF /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -242,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8061A0F2DFED83D00F75ECF /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
