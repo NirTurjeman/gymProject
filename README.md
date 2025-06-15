@@ -50,3 +50,8 @@ Then open the `.xcworkspace` file.
 ## License
 
 This project is for educational purposes.
+
+## 📹 App Test Video
+
+- [▶️ Unity Reps Demo](./Unity_Reps.mov)
+- [▶️ Full App Test](./App_Test.mp4)
